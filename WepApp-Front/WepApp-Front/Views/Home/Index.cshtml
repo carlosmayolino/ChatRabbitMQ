@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Iae fera! :P</h1>
+    <br />
+    <p>Deseja enviar um novo arquivo? Utilize o campo abaixo.</p>
+    <br />
+    <br />
+    @using (Html.BeginForm(null, "", FormMethod.Post, new { id = "formArquivo" }))
+    {
+    <div>
+        <fieldset>
+            <label for="send">Enviar </label>
+            <input type="file" id="in_file" />
+            <input id="btEnviar" type="button" class="btn btn-primary" value="Enviar" />
+        </fieldset>
+        <div>
+            <p id="msg" class="hide"> </p>
+        </div>
+
+    </div>
+    }
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var form;
+
+        $('#in_file').change(function (event) {
+            form = new FormData();
+            form.append('file', event.target.files[0]); // para apenas 1 arquivo
+         });
+
+        $('#btEnviar').click(function () {
+            $.ajax({
+                url: "Home/UploadArquivo",
+                data: form,
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                success: function (data) {
+                    $("#msg").html("Arquivo enviado com sucesso.")
+                        .show()
+                        .fadeOut(5000);
+                    $("#send").val("");
+                }
+            });
+        });
+    });
+
+
+</script>

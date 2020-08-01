@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+  webapp-front:
+    #image: webapp/app
+    container_name: webapp-front
+    build: ./WepApp-Front/WepApp-Front/
+    ports:
+      - 8000:80
+  webapp-back:
+    #image: webapp/app
+    container_name: webapp-back
+    build: ./WebApp-BackEnd/WebApp-BackEnd/
+    ports:
+      - 9000:80
+  redis:
+    image: redis
+    command: redis-server --requirepass RedisCM!
+    ports:
+      - "6379:6379"
